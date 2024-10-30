@@ -29,6 +29,12 @@ public class NoteController {
         return "redirect:/";
     }
 
+    @PostMapping("/modify/{noteId}")
+    public String modify(@PathVariable long noteId, String title, String content) {
+        noteService.modify(noteId, title, content);
+        return "redirect:/notes/%d".formatted(noteId);
+    }
+
     @GetMapping("/{noteId}")
     public String select(@PathVariable long noteId, Model model) {
 

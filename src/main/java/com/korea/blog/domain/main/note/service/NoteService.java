@@ -28,4 +28,12 @@ public class NoteService {
     public Note getOne(long noteId) {
         return noteRepository.findById(noteId).orElseThrow();
     }
+
+    public void modify(long noteId, String title, String content) {
+        Note note = getOne(noteId);
+        note.setTitle(title);
+        note.setContent(content);
+
+        noteRepository.save(note);
+    }
 }
