@@ -30,7 +30,7 @@
             <form th:action="@{|/notes/modify/${selectedNote.id}|}" method="post" onsubmit="updateNote(this); return false;">
                 <input type="submit" value="수정" class="btn btn-success"/>
             </form>
-            <form action="">
+            <form th:action="@{|/notes/delete/${selectedNote.id}|}" method="post" onsubmit="deleteNote(this); return false;">
                 <input type="submit" value="삭제" class="btn btn-error" />
             </form>
         </div>
@@ -38,10 +38,13 @@
 </div>
 <script>
 
+    function deleteNote(form) {
+        form.submit();
+    }
+
     function updateNote(form) {
         const titleInput = document.querySelector("#title");
         const contentInput = document.querySelector("#content");
-
 
         // 새로운 input 요소 생성
         const newTitleInput = document.createElement('input');

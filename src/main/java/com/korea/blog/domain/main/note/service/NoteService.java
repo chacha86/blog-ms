@@ -30,10 +30,19 @@ public class NoteService {
     }
 
     public void modify(long noteId, String title, String content) {
+
+        if(title.trim().length() == 0) {
+            title = "제목 없음";
+        }
+
         Note note = getOne(noteId);
         note.setTitle(title);
         note.setContent(content);
 
         noteRepository.save(note);
+    }
+
+    public void delete(long noteId) {
+        noteRepository.deleteById(noteId);
     }
 }
