@@ -24,4 +24,8 @@ public class NoteService {
 
         return noteRepository.save(note);
     }
+
+    public Note getOne(long noteId) {
+        return noteRepository.findById(noteId).orElseThrow();
+    }
 }
