@@ -24,7 +24,9 @@ public class MainController {
     public String main(Model model) {
 
         List<Note> noteList = mainService.getNoteList();
+        Note selectedNote = noteList.getFirst();
         model.addAttribute("noteList", noteList);
+        model.addAttribute("selectedNote", selectedNote);
 
         return "main";
     }

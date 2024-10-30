@@ -21,8 +21,8 @@
     </div>
     <div class="right bg-blue-300 h-[100%] w-[85%] p-2">
         <div class="flex flex-col gap-2">
-            <input class="input" type="text">
-            <textarea class="textarea textarea-bordered" placeholder="Bio"></textarea>
+            <input class="input" type="text" th:value="${selectedNote.title}">
+            <textarea class="textarea textarea-bordered" th:text="${selectedNote.content}"></textarea>
         </div>
         <div class="mt-[10px]">
             <button class="btn btn-success">수정</button>
