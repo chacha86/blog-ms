@@ -8,13 +8,13 @@
 </head>
 <body>
 <div class="logo bg-green-300 h-[10vh] p-2">
-    logo
+    <a href="/">logo</a>
 </div>
 <div class="content flex bg-yellow-300 h-[90vh]">
-    <div class="left bg-red-300 h-[100%] w-[15%] p-2">
-        <ul>
+    <div class="left bg-red-300 h-[100%] w-[15%] p-2 ">
+        <ul class="h-[90%] overflow-auto">
             <li th:class="${note.id == selectedNote.id} ? 'bg-blue-500' : ''" th:each="note : ${noteList}">
-                <a th:href="@{|/notes/${note.id}|}" th:text="${note.title}"></a>
+                <a class="block p-2" th:href="@{|/notes/${note.id}|}" th:text="${note.title}"></a>
             </li>
         </ul>
         <form action="/notes/write" method="post">
@@ -39,7 +39,9 @@
 <script>
 
     function deleteNote(form) {
-        form.submit();
+        if(confirm("정말 삭제하시겠습니까?")) {
+            form.submit();
+        }
     }
 
     function updateNote(form) {
@@ -60,7 +62,10 @@
         newContentInput.value = contentInput.value;
         form.appendChild(newContentInput);
 
-        form.submit();
+
+        if(confirm("수정하시겠습니까?")) {
+            form.submit();
+        }
     }
 
 </script>
