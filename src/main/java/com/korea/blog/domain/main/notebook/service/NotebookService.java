@@ -28,4 +28,8 @@ public class NotebookService {
     public Notebook getOne(long bookId) {
         return notebookRepository.findById(bookId).orElseThrow();
     }
+
+    public Notebook save(Notebook notebook) {
+        return notebookRepository.save(notebook);
+    }
 }

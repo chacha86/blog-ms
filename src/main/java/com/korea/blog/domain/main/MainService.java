@@ -29,6 +29,16 @@ public class MainService {
         }
     }
 
+    public Notebook saveDefaultNote(long bookId) {
+        Notebook notebook = notebookService.getOne(bookId);
+        Note note = noteService.saveDefault();
+
+        notebook.addNote(note);
+        notebook = notebookService.save(notebook);
+
+        return notebook;
+    }
+
     public List<Note> getNoteList() {
         return noteService.getList();
     }

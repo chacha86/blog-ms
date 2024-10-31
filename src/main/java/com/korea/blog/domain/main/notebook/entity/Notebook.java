@@ -1,10 +1,11 @@
 package com.korea.blog.domain.main.notebook.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.korea.blog.domain.main.note.entity.Note;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,4 +20,11 @@ public class Notebook {
     private long id;
     private String name;
 
+    @OneToMany(mappedBy = "parent")
+    List<Note> noteList = new ArrayList<>();
+
+    public void addNote(Note note) {
+        note.setParent(this);
+        noteList.add(note);
+    }
 }
