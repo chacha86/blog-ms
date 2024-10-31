@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -20,6 +21,13 @@ public class NotebookController {
     private final NotebookService notebookService; // 노트북 처리 전문
     private final MainService mainService; // 노트북 + 노트 혼합 작업 전문
 
+    @PostMapping("/write")
+    public String write() {
+        notebookService.saveDefault();
+        return "redirect:/books";
+    }
+
+
     @GetMapping("")
     public String list(Model model) {
 
@@ -31,6 +39,6 @@ public class NotebookController {
         model.addAttribute("noteList", noteList);
         model.addAttribute("selectedNote", selectedNote);
 
-        return "main.html";
+        return "main";
     }
 }
