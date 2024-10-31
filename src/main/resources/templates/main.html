@@ -13,8 +13,8 @@
 <div class="content flex bg-yellow-300 h-[90vh]">
     <div class="left-book bg-red-500 h-[100%] w-[15%] p-2 ">
         <ul class="h-[90%] overflow-auto">
-            <li th:each="notebook : ${notebookList}">
-                <a class="block p-2" th:text="${notebook.name}"></a>
+            <li th:class="${notebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''" th:each="notebook : ${notebookList}">
+                <a class="block p-2" th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
             </li>
         </ul>
         <form action="/books/write" method="post">

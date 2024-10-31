@@ -36,4 +36,8 @@ public class MainService {
     public Note getNote(long noteId) {
         return noteService.getOne(noteId);
     }
+
+    public List<Notebook> getNoteBookList() {
+        return notebookService.getList();
+    }
 }

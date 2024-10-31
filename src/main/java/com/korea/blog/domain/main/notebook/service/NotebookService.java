@@ -17,11 +17,15 @@ public class NotebookService {
         return notebookRepository.findAll();
     }
 
-    public void saveDefault() {
+    public Notebook saveDefault() {
         Notebook notebook = Notebook.builder()
                 .name("새노트북")
                 .build();
 
-        notebookRepository.save(notebook);
+        return notebookRepository.save(notebook);
+    }
+
+    public Notebook getOne(long bookId) {
+        return notebookRepository.findById(bookId).orElseThrow();
     }
 }

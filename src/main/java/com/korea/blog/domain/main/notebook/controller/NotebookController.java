@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,20 +24,37 @@ public class NotebookController {
 
     @PostMapping("/write")
     public String write() {
-        notebookService.saveDefault();
-        return "redirect:/books";
+        Notebook notebook = notebookService.saveDefault();
+        return "redirect:/books/%d".formatted(notebook.getId());
     }
 
 
-    @GetMapping("")
-    public String list(Model model) {
+//    @GetMapping("")
+//    public String list(Model model) {
+//
+//        List<Notebook> notebookList = notebookService.getList();
+//        List<Note> noteList = mainService.getNoteList();
+//        Note selectedNote = noteList.getFirst();
+//
+//        model.addAttribute("notebookList", notebookList);
+//        model.addAttribute("noteList", noteList);
+//        model.addAttribute("selectedNote", selectedNote);
+//
+//        return "main";
+//    }
+
+    @GetMapping("/{bookId}")
+    public String select(@PathVariable long bookId, Model model) {
 
         List<Notebook> notebookList = notebookService.getList();
+        Notebook selectedNotebook = notebookService.getOne(bookId);
         List<Note> noteList = mainService.getNoteList();
         Note selectedNote = noteList.getFirst();
 
+
         model.addAttribute("notebookList", notebookList);
         model.addAttribute("noteList", noteList);
+        model.addAttribute("selectedNotebook", selectedNotebook);
         model.addAttribute("selectedNote", selectedNote);
 
         return "main";
