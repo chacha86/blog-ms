@@ -23,11 +23,34 @@ public class NotebookController {
     private final MainService mainService; // 노트북 + 노트 혼합 작업 전문
 
     @PostMapping("/write")
-    public String write() {
-        Notebook notebook = notebookService.saveDefault();
+    public String writeBook() {
+//        Notebook notebook = notebookService.saveDefault();
+
+        Notebook notebook = mainService.saveDefaultNotebook();
         return "redirect:/books/%d".formatted(notebook.getId());
     }
 
+    @PostMapping("/{bookId}/notes/write")
+    public String writeNote(@PathVariable long bookId) {
+        Note note = mainService.saveDefaultNote(bookId);
+        return "redirect:/books/%d/notes/%d".formatted(bookId, note.getId());
+    }
+
+    @GetMapping("/{bookId}/notes/{noteId}")
+    public String selectNote(@PathVariable long bookId, @PathVariable long noteId, Model model) {
+
+        List<Notebook> notebookList = notebookService.getList();
+        Notebook selectedNotebook = notebookService.getOne(bookId);
+        Note selectedNote = mainService.getNote(noteId);
+        List<Note> noteList = selectedNotebook.getNoteList();
+
+        model.addAttribute("notebookList", notebookList);
+        model.addAttribute("noteList", noteList);
+        model.addAttribute("selectedNotebook", selectedNotebook);
+        model.addAttribute("selectedNote", selectedNote);
+
+        return "main";
+    }
 
 //    @GetMapping("")
 //    public String list(Model model) {
@@ -48,9 +71,8 @@ public class NotebookController {
 
         List<Notebook> notebookList = notebookService.getList();
         Notebook selectedNotebook = notebookService.getOne(bookId);
-        List<Note> noteList = mainService.getNoteList();
+        List<Note> noteList = selectedNotebook.getNoteList();
         Note selectedNote = noteList.getFirst();
-
 
         model.addAttribute("notebookList", notebookList);
         model.addAttribute("noteList", noteList);

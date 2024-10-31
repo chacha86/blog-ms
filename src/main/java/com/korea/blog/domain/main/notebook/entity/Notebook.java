@@ -21,6 +21,7 @@ public class Notebook {
     private String name;
 
     @OneToMany(mappedBy = "parent")
+    @Builder.Default
     List<Note> noteList = new ArrayList<>();
 
     public void addNote(Note note) {
