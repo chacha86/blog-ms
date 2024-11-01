@@ -2,6 +2,7 @@ package com.korea.blog.domain.main.note.service;
 
 import com.korea.blog.domain.main.note.entity.Note;
 import com.korea.blog.domain.main.note.repository.NoteRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class NoteService {
         return noteRepository.findById(noteId).orElseThrow();
     }
 
+    @Transactional
     public Note modify(long noteId, String title, String content) {
 
         if(title.trim().length() == 0) {
@@ -39,7 +41,7 @@ public class NoteService {
         note.setTitle(title);
         note.setContent(content);
 
-        return noteRepository.save(note);
+        return note;
     }
 
     public void delete(long noteId) {
