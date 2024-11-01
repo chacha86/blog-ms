@@ -20,6 +20,9 @@
         <form action="/books/write" method="post">
             <input type="submit" class="btn btn-info" value="추가"/>
         </form>
+        <form th:action="@{|/books/${selectedNotebook.id}/write|}" method="post">
+            <input type="submit" class="btn btn-info" value="하위 노트 추가"/>
+        </form>
     </div>
     <div class="left-note bg-red-300 h-[100%] w-[15%] p-2 ">
         <ul class="h-[90%] overflow-auto">
