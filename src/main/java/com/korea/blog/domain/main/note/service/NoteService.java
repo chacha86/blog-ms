@@ -29,7 +29,7 @@ public class NoteService {
         return noteRepository.findById(noteId).orElseThrow();
     }
 
-    public void modify(long noteId, String title, String content) {
+    public Note modify(long noteId, String title, String content) {
 
         if(title.trim().length() == 0) {
             title = "제목 없음";
@@ -39,7 +39,7 @@ public class NoteService {
         note.setTitle(title);
         note.setContent(content);
 
-        noteRepository.save(note);
+        return noteRepository.save(note);
     }
 
     public void delete(long noteId) {
