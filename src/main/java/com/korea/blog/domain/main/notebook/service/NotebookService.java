@@ -29,10 +29,11 @@ public class NotebookService {
     @Transactional
     public Notebook saveSubNotebook(long parentId) {
         Notebook parentNotebook = getOne(parentId);
-        Notebook subNotebook = saveDefault();
+        Notebook subNotebook = saveDefault(); // 서브 노트북
+
         parentNotebook.addSubNotebook(subNotebook);
 
-        return parentNotebook;
+        return subNotebook;
     }
 
     public Notebook getOne(long bookId) {
