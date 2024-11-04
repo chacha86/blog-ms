@@ -40,7 +40,10 @@
             <input type="submit" class="btn btn-info" value="추가"/>
         </form>
         <form th:action="@{|/books/${selectedNotebook.id}/write|}" method="post">
-            <input type="submit" class="btn btn-info" value="하위 노트 추가"/>
+            <input type="submit" class="btn btn-info" value="하위 노트북 추가"/>
+        </form>
+        <form th:action="@{|/books/${selectedNotebook.id}/delete|}" method="post">
+            <input type="submit" class="btn btn-error" value="노트북 삭제"/>
         </form>
     </div>
     <div class="left-note bg-red-300 h-[100%] w-[15%] p-2 ">
