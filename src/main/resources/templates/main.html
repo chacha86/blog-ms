@@ -19,8 +19,8 @@
                 </th:block>
                 <th:block th:unless="${#lists.size(notebook.subNotebookList) == 0}">
                     <details open>
-                        <summary>
-                            <a class="block w-[100%]" th:classappend="${notebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''" th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+                        <summary th:classappend="${notebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''" >
+                            <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
                         </summary>
                         <ul>
                             <li th:each="subNotebook : ${notebook.subNotebookList}">
