@@ -32,6 +32,9 @@ public class NotebookController {
 
     @PostMapping("/{bookId}/write")
     public String writeSubBook(@PathVariable long bookId) {
+
+        notebookService.checkSubNotebook(bookId);
+
         Notebook subNotebook = mainService.saveSubNotebook(bookId);
         return "redirect:/books/%d/notes/%d".formatted(subNotebook.getId(), subNotebook.getNoteList().getFirst().getId());
     }

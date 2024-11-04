@@ -43,4 +43,13 @@ public class NotebookService {
     public Notebook save(Notebook notebook) {
         return notebookRepository.save(notebook);
     }
+
+    public void checkSubNotebook(long bookId) {
+        Notebook notebook = getOne(bookId);
+        
+        if(notebook.getParent() != null) {
+            throw new RuntimeException("아직은 서브 노트북에 서브 노트북을 추가할 수 없습니다. 추후 업데이트 예정");
+        }
+        
+    }
 }
