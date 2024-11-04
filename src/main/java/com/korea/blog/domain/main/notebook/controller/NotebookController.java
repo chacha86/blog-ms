@@ -41,7 +41,8 @@ public class NotebookController {
 
     @PostMapping("/{bookId}/delete")
     public String deleteBook(@PathVariable long bookId) {
-        mainService.deleteNotebook(bookId);
+//        mainService.deleteNotebook(bookId);
+        notebookService.delete(bookId);
         return "redirect:/books/%d".formatted(notebookService.getList().getFirst().getId());
     }
 
