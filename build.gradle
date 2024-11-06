@@ -37,6 +37,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.5'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 }
 
