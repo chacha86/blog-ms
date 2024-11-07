@@ -1,15 +1,11 @@
 package com.korea.blog.domain.main;
 
-import com.korea.blog.domain.main.note.entity.Note;
-import com.korea.blog.domain.main.notebook.entity.Notebook;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,19 +22,8 @@ public class MainController {
     @GetMapping("/")
     public String main(Model model, @RequestParam(defaultValue = "") String keyword) {
 
-        List<Notebook> notebookList = mainService.getNoteBookList();
-        Notebook selectedNotebook = notebookList.getFirst();
-
-        List<Note> noteList = mainService.getNoteList();
-        Note selectedNote = noteList.getFirst();
-
-        List<Notebook> searchedNotebookList = mainService.getSearchedNotebookList(keyword);
-        List<Note> searchedNoteList = mainService.getSearchedNoteList(keyword);
-
-        model.addAttribute("notebookList", notebookList);
-        model.addAttribute("noteList", noteList);
-        model.addAttribute("selectedNote", selectedNote);
-        model.addAttribute("selectedNotebook", selectedNotebook);
+        MainDataDto mainDataDto = mainService.getDefaultMainDataDto(keyword);
+        model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
     }

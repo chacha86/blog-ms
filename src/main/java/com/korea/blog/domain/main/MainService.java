@@ -90,4 +90,35 @@ public class MainService {
     public List<Note> getSearchedNoteList(String keyword) {
         return noteService.getSearchedList(keyword);
     }
+
+    public MainDataDto getMainDataDto(long bookId, long noteId, String keyword) {
+        List<Notebook> notebookList = getNoteBookList();
+        Notebook selectedNotebook = notebookService.getOne(bookId);
+
+        List<Note> noteList = selectedNotebook.getNoteList();
+        Note selectedNote = noteService.getOne(noteId);
+
+        List<Notebook> searchedNotebookList = getSearchedNotebookList(keyword);
+        List<Note> searchedNoteList = getSearchedNoteList(keyword);
+
+        return MainDataDto.builder()
+                .notebookList(notebookList)
+                .selectedNotebook(selectedNotebook)
+                .noteList(noteList)
+                .selectedNote(selectedNote)
+                .searchedNotebookList(searchedNotebookList)
+                .searchedNoteList(searchedNoteList)
+                .build();
+    }
+
+    public MainDataDto getDefaulNoteMainDataDto(long bookId, String keyword) {
+        Notebook notebook = notebookService.getOne(bookId);
+        long noteId = notebook.getNoteList().getFirst().getId();
+        return getMainDataDto(bookId, noteId, keyword);
+    }
+
+    public MainDataDto getDefaultMainDataDto(String keyword) {
+        Notebook firstNotebook = notebookService.getList().getFirst();
+        return getDefaulNoteMainDataDto(firstNotebook.getId(), keyword);
+    }
 }

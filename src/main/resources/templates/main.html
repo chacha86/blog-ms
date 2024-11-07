@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="~{layout}">
-<div layout:fragment="content">
+<div layout:fragment="content" th:with="
+    notebookList = ${mainDataDto.notebookList},
+    noteList = ${mainDataDto.noteList},
+    selectedNotebook = ${mainDataDto.selectedNotebook},
+    selectedNote = ${mainDataDto.selectedNote},
+    searchedNotebookList = ${mainDataDto.searchedNotebookList},
+    searchedNoteList = ${mainDataDto.searchedNoteList}
+">
     <dialog id="my_modal_1" class="modal">
         <div class="modal-box">
             <div class="flex justify-center modal-action">
@@ -23,10 +30,10 @@
             </form>
             <div class="border h-[80%]">
                 <ul>
-                    <li th:each="notebook : ${notebookList}">
+                    <li th:each="notebook : ${searchedNotebookList}">
                         <a href="#" th:text="${notebook.name}"></a>
                     </li>
-                    <li th:each="note : ${noteList}">
+                    <li th:each="note : ${searchedNoteList}">
                         <a href="#" th:text="${note.title}"></a>
                     </li>
                 </ul>
@@ -105,9 +112,6 @@
             </div>
         </div>
     </div>
-    <script>
-        my_modal_2.showModal();
-    </script>
     <script th:inline="javascript">
         const Editor = toastui.Editor;
 
