@@ -17,15 +17,18 @@
     </dialog>
     <dialog id="my_modal_2" class="modal">
         <div class="modal-box h-[50vh] flex flex-col gap-4">
-            <form class="flex justify-center gap-4" action="">
-                <input type="text" class="input input-bordered">
+            <form class="flex justify-center gap-4" action="/">
+                <input type="text" class="input input-bordered" name="keyword">
                 <input type="submit" class="btn btn-success" value="검색">
             </form>
             <div class="border h-[80%]">
                 <ul>
-                    <li>검색결과1</li>
-                    <li>검색결과2</li>
-                    <li>검색결과3</li>
+                    <li th:each="notebook : ${notebookList}">
+                        <a href="#" th:text="${notebook.name}"></a>
+                    </li>
+                    <li th:each="note : ${noteList}">
+                        <a href="#" th:text="${note.title}"></a>
+                    </li>
                 </ul>
             </div>
             <form method="dialog" class="flex justify-end">
@@ -61,7 +64,7 @@
             <!--                <a class="block p-2" th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>-->
             <!--            </li>-->
             <!--        </ul>-->
-            <form action="/books/write" method="post">
+            <form th:action="@{/books/write}" method="post">
                 <input type="submit" class="btn btn-info" value="추가"/>
             </form>
             <form th:action="@{|/books/${selectedNotebook.id}/write|}" method="post">

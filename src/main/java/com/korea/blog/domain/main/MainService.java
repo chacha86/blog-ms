@@ -82,4 +82,12 @@ public class MainService {
     public List<Notebook> getNoteBookList() {
         return notebookService.getList();
     }
+
+    public List<Notebook> getSearchedNotebookList(String keyword) {
+        return notebookService.getSearchedList(keyword);
+    }
+
+    public List<Note> getSearchedNoteList(String keyword) {
+        return noteService.getSearchedList(keyword);
+    }
 }
