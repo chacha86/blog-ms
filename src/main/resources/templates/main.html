@@ -33,7 +33,7 @@
                 <ul>
                     <li th:each="notebook : ${searchedNotebookList}">
                         <i class="fa-solid fa-book"></i>
-                        <a href="#" th:text="${notebook.name}"></a>
+                        <a th:href="@{|/books/${notebook.id}?keyword=${keyword}&isModalOpen=false|}" th:text="${notebook.name}"></a>
                     </li>
                     <li th:each="note : ${searchedNoteList}">
                         <i class="fa-solid fa-file-lines"></i>
