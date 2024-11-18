@@ -29,12 +29,14 @@
                 <input type="hidden" name="isModalOpen" value="true"/>
                 <input type="submit" class="btn btn-success" value="검색">
             </form>
-            <div class="border h-[80%]">
+            <div class="border h-[80%] overflow-auto">
                 <ul>
                     <li th:each="notebook : ${searchedNotebookList}">
+                        <i class="fa-solid fa-book"></i>
                         <a href="#" th:text="${notebook.name}"></a>
                     </li>
                     <li th:each="note : ${searchedNoteList}">
+                        <i class="fa-solid fa-file-lines"></i>
                         <a href="#" th:text="${note.title}"></a>
                     </li>
                 </ul>
