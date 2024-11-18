@@ -24,6 +24,7 @@ public class MainController {
 
         MainDataDto mainDataDto = mainService.getDefaultMainDataDto(keyword);
         model.addAttribute("mainDataDto", mainDataDto);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("isModalOpen", isModalOpen);
 
         return "main";
