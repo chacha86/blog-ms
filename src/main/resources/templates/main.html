@@ -39,7 +39,7 @@
                     </li>
                     <li th:each="note : ${searchedNoteList}">
                         <i class="fa-solid fa-file-lines"></i>
-                        <a href="#" th:text="${note.title}"></a>
+                        <a th:href="@{|/books/${note.parent.id}/notes/${note.id}?keyword=${keyword}&isModalOpen=false|}" th:text="${note.title}"></a>
                     </li>
                 </ul>
             </div>
@@ -92,7 +92,7 @@
         <div class="left-note border border-black h-[100%] w-[15%] p-2 ">
             <ul class="h-[90%] overflow-auto">
                 <li th:class="${note.id == selectedNote.id} ? 'bg-blue-500' : ''" th:each="note : ${noteList}">
-                    <a class="block p-2" th:href="@{|/books/${selectedNotebook.id}/notes/${note.id}|}"
+                    <a class="block p-2" th:href="@{|/books/${selectedNotebook.id}/notes/${note.id}?keyword=${keyword}&isModalOpen=false|}"
                        th:text="${note.title}"></a>
                 </li>
             </ul>
