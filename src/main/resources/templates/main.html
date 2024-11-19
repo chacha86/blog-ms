@@ -8,7 +8,8 @@
     searchedNotebookList = ${mainDataDto.searchedNotebookList},
     searchedNoteList = ${mainDataDto.searchedNoteList},
     keyword = ${paramDto.keyword},
-    isModalOpen = ${paramDto.isModalOpen}
+    isModalOpen = ${paramDto.isModalOpen},
+    sortTarget = ${paramDto.sortTarget}
 ">
     <dialog id="my_modal_1" class="modal">
         <div class="modal-box">
@@ -56,7 +57,7 @@
                 <li th:each="notebook : ${notebookList}">
                     <th:block th:if="${#lists.size(notebook.subNotebookList) == 0 && notebook.parent == null}">
                         <a class="block p-2" th:classappend="${notebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''"
-                           th:href="@{|/books/${notebook.id}?keyword=${keyword}&isModalOpen=false|}"
+                           th:href="${@paramDto.getParamUrl('/books/' + notebook.id)}"
                            th:text="${notebook.name}"></a>
                     </th:block>
                     <th:block th:unless="${#lists.size(notebook.subNotebookList) == 0}">
@@ -67,7 +68,7 @@
                             <ul>
                                 <li th:each="subNotebook : ${notebook.subNotebookList}">
                                     <a th:classappend="${subNotebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''"
-                                       th:href="@{|/books/${subNotebook.id}|}" th:text="${subNotebook.name}"></a>
+                                       th:href="${@paramDto.getParamUrl('/books/' + subNotebook.id)}" th:text="${subNotebook.name}"></a>
                                 </li>
                             </ul>
                         </details>
@@ -96,7 +97,7 @@
             <ul class="h-[90%] overflow-auto">
                 <li th:class="${note.id == selectedNote.id} ? 'bg-blue-500' : ''" th:each="note : ${noteList}">
                     <a class="block p-2"
-                       th:href="@{|/books/${selectedNotebook.id}/notes/${note.id}?keyword=${keyword}&isModalOpen=false|}"
+                       th:href="${@paramDto.getParamUrl('/books/' + selectedNotebook.id + '/notes/' + note.id)}"
                        th:text="${note.title}"></a>
                 </li>
             </ul>
@@ -104,8 +105,8 @@
                 <form th:action="@{|/books/${selectedNotebook.id}/notes/write|}" method="post">
                     <input type="submit" class="btn btn-info" value="추가"/>
                 </form>
-                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=id|}" class="btn">날짜순</a>
-                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=title|}" class="btn">이름순</a>
+                <a th:href="@{|/books/${selectedNotebook.id}/notes/${selectedNote.id}?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=id|}" class="btn">날짜순</a>
+                <a th:href="@{|/books/${selectedNotebook.id}/notes/${selectedNote.id}?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=title|}" class="btn">이름순</a>
             </div>
         </div>
         <div class="right border border-black h-[100%] w-[70%] p-2">
@@ -184,7 +185,5 @@
         }
 
     </script>
-
-
 </div>
 </html>
