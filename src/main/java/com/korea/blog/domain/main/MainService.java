@@ -95,7 +95,7 @@ public class MainService {
         List<Notebook> notebookList = getNoteBookList();
         Notebook selectedNotebook = notebookService.getOne(bookId);
 
-        List<Note> noteList = selectedNotebook.getNoteList();
+        List<Note> noteList = noteService.getListOrderByIdDesc(selectedNotebook.getId());
         Note selectedNote = noteService.getOne(noteId);
 
         List<Notebook> searchedNotebookList = getSearchedNotebookList(keyword);

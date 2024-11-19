@@ -55,4 +55,8 @@ public class NoteService {
     public List<Note> getSearchedList(String keyword) {
         return noteRepository.findByTitleContaining(keyword);
     }
+
+    public List<Note> getListOrderByIdDesc(long notebookId) {
+        return noteRepository.findByParentIdOrderByIdDesc(notebookId);
+    }
 }
