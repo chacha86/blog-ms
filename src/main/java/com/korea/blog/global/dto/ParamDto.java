@@ -2,11 +2,13 @@ package com.korea.blog.global.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
 @Component
+@Scope("request")
 public class ParamDto {
     private String keyword;
     private String isModalOpen;
