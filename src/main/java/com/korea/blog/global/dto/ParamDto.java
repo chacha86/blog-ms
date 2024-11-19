@@ -8,9 +8,11 @@ import lombok.Setter;
 public class ParamDto {
     private String keyword;
     private String isModalOpen;
+    private String sortTarget;
 
     public ParamDto() {
         keyword = "";
         isModalOpen = "false";
+        sortTarget = "id";
     }
 }

@@ -59,4 +59,8 @@ public class NoteService {
     public List<Note> getListOrderByIdDesc(long notebookId) {
         return noteRepository.findByParentIdOrderByIdDesc(notebookId);
     }
+
+    public List<Note> getListOrderByTitleAsc(long notebookId) {
+        return noteRepository.findByParentIdOrderByTitleAsc(notebookId);
+    }
 }

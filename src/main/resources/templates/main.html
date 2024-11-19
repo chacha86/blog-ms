@@ -104,8 +104,8 @@
                 <form th:action="@{|/books/${selectedNotebook.id}/notes/write|}" method="post">
                     <input type="submit" class="btn btn-info" value="추가"/>
                 </form>
-                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}|}" class="btn">날짜순</a>
-                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}|}" class="btn">이름순</a>
+                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=id|}" class="btn">날짜순</a>
+                <a th:href="@{|/?keyword=${keyword}&isModalOpen=${isModalOpen}&sortTarget=title|}" class="btn">이름순</a>
             </div>
         </div>
         <div class="right border border-black h-[100%] w-[70%] p-2">
