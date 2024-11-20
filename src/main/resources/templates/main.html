@@ -17,6 +17,7 @@
                 <form th:action="@{|/books/${selectedNotebook.id}/modify|}" method="post">
                     <input type="text" class="input" name="name" th:value="${selectedNotebook.name}">
                     <input type="hidden" name="selectedNoteId" th:value="${selectedNote.id}">
+                    <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                     <input type="submit" class="btn btn-success" value="변경">
                 </form>
                 <form method="dialog">
@@ -87,15 +88,15 @@
             <!--            </li>-->
             <!--        </ul>-->
             <form th:action="@{/books/write}" method="post">
+                <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                 <input type="submit" class="btn btn-info" value="추가"/>
             </form>
             <form th:action="@{|/books/${selectedNotebook.id}/write|}" method="post">
+                <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                 <input type="submit" class="btn btn-info" value="하위 노트북 추가"/>
             </form>
             <form th:action="@{|/books/${selectedNotebook.id}/delete|}" method="post">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="isModalOpen" th:value="${isModalOpen}">
-                <input type="hidden" name="sortTarget" th:value="${sortTarget}">
+                <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                 <input type="submit" class="btn btn-error" value="노트북 삭제"/>
             </form>
             <button class="btn" onclick="my_modal_1.showModal()">노트북 이름 변경</button>
@@ -126,10 +127,12 @@
             <div class="flex mt-[10px]">
                 <form th:action="@{|/notes/modify/${selectedNote.id}|}" method="post"
                       onsubmit="updateNote(this); return false;">
+                    <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                     <input type="submit" value="수정" class="btn btn-success"/>
                 </form>
                 <form th:action="@{|/notes/delete/${selectedNote.id}|}" method="post"
                       onsubmit="deleteNote(this); return false;">
+                    <th:block th:insert="fragment::params(${keyword}, ${isModalOpen}, ${sortTarget})" ></th:block>
                     <input type="submit" value="삭제" class="btn btn-error"/>
                 </form>
             </div>
