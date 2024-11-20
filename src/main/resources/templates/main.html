@@ -7,9 +7,9 @@
     selectedNote = ${mainDataDto.selectedNote},
     searchedNotebookList = ${mainDataDto.searchedNotebookList},
     searchedNoteList = ${mainDataDto.searchedNoteList},
-    keyword = ${paramDto.keyword},
-    isModalOpen = ${paramDto.isModalOpen},
-    sortTarget = ${paramDto.sortTarget}
+    keyword = ${urlParamManager.keyword},
+    isModalOpen = ${urlParamManager.isModalOpen},
+    sortTarget = ${urlParamManager.sortTarget}
 ">
     <dialog id="my_modal_1" class="modal">
         <div class="modal-box">
@@ -37,12 +37,12 @@
                 <ul>
                     <li th:each="notebook : ${searchedNotebookList}">
                         <i class="fa-solid fa-book"></i>
-                        <a th:href="${@paramDto.getParamUrl('/books/' + notebook.id)}"
+                        <a th:href="${@urlParamManager.getParamUrl('/books/' + notebook.id)}"
                            th:text="${notebook.name}"></a>
                     </li>
                     <li th:each="note : ${searchedNoteList}">
                         <i class="fa-solid fa-file-lines"></i>
-                        <a th:href="${@paramDto.getParamUrl('/books/' + note.parent.id + '/notes/' + note.id)}"
+                        <a th:href="${@urlParamManager.getParamUrl('/books/' + note.parent.id + '/notes/' + note.id)}"
                            th:text="${note.title}"></a>
                     </li>
                 </ul>
@@ -63,7 +63,7 @@
                 <li th:each="notebook : ${notebookList}">
                     <th:block th:if="${#lists.size(notebook.subNotebookList) == 0 && notebook.parent == null}">
                         <a class="bookAnchor block p-2" th:classappend="${notebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''"
-                           th:href="${@paramDto.getParamUrl('/books/' + notebook.id)}"
+                           th:href="${@urlParamManager.getBookUrl(notebook.id)}"
                            th:text="${notebook.name}"></a>
                     </th:block>
                     <th:block th:unless="${#lists.size(notebook.subNotebookList) == 0}">
@@ -74,7 +74,7 @@
                             <ul>
                                 <li th:each="subNotebook : ${notebook.subNotebookList}">
                                     <a class="bookAnchor" th:classappend="${subNotebook.id == selectedNotebook.id} ? 'bg-blue-500' : ''"
-                                       th:href="${@paramDto.getParamUrl('/books/' + subNotebook.id)}" th:text="${subNotebook.name}"></a>
+                                       th:href="${@urlParamManager.getParamUrl('/books/' + subNotebook.id)}" th:text="${subNotebook.name}"></a>
                                 </li>
                             </ul>
                         </details>
@@ -102,7 +102,7 @@
             <ul class="h-[90%] overflow-auto">
                 <li th:class="${note.id == selectedNote.id} ? 'bg-blue-500' : ''" th:each="note : ${noteList}">
                     <a class="block p-2"
-                       th:href="${@paramDto.getParamUrl('/books/' + selectedNotebook.id + '/notes/' + note.id)}"
+                       th:href="${@urlParamManager.getNoteUrl(selectedNotebook.id, note.id)}"
                        th:text="${note.title}"></a>
                 </li>
             </ul>
@@ -143,28 +143,6 @@
             my_modal_2.showModal();
         }
 
-        const books = document.querySelectorAll(".bookAnchor");
-
-        function defaultParamUrl(url) {
-            const keyword = document.querySelector("#keyword");
-            const isModalOpen2 = document.querySelector("#isModalOpen");
-            const sortTarget = document.querySelector("#sortTarget");
-
-            const params = new URLSearchParams({
-              keyword: keyword.value,
-              isModalOpen2: isModalOpen2.value,
-              sortTarget: sortTarget.value,
-            });
-
-            const paramUrl = url + params.toString();
-
-            return paramUrl;
-        }
-
-        function getAction(url) {
-            const paramUrl = defaultParamUrl(url);
-            location.href = paramUrl;
-        }
     </script>
     <script th:inline="javascript">
         const Editor = toastui.Editor;

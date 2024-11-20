@@ -1,6 +1,6 @@
 package com.korea.blog.domain.main;
 
-import com.korea.blog.global.dto.ParamDto;
+import com.korea.blog.global.dto.UrlParamManager;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,9 @@ public class MainController {
 
     // 초기 화면 -> 첫번째 노트북의 첫번째 노트가 선택되도록 약속
     @GetMapping("/")
-    public String main(Model model, ParamDto paramDto) {
+    public String main(Model model, UrlParamManager urlParamManager) {
 
-        MainDataDto mainDataDto = mainService.getDefaultMainDataDto(paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getDefaultMainDataDto(urlParamManager.getKeyword(), urlParamManager.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";

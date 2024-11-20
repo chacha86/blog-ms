@@ -5,7 +5,7 @@ import com.korea.blog.domain.main.MainService;
 import com.korea.blog.domain.main.note.entity.Note;
 import com.korea.blog.domain.main.notebook.entity.Notebook;
 import com.korea.blog.domain.main.notebook.service.NotebookService;
-import com.korea.blog.global.dto.ParamDto;
+import com.korea.blog.global.dto.UrlParamManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,18 +56,18 @@ public class NotebookController {
     }
 
     @GetMapping("/{bookId}/notes/{noteId}")
-    public String selectNote(@PathVariable long bookId, ParamDto paramDto, @PathVariable long noteId, Model model) {
+    public String selectNote(@PathVariable long bookId, UrlParamManager urlParamManager, @PathVariable long noteId, Model model) {
 
-        MainDataDto mainDataDto = mainService.getMainDataDto(bookId, noteId, paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getMainDataDto(bookId, noteId, urlParamManager.getKeyword(), urlParamManager.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
     }
 
     @GetMapping("/{bookId}")
-    public String select(@PathVariable long bookId, ParamDto paramDto, Model model) {
+    public String select(@PathVariable long bookId, UrlParamManager urlParamManager, Model model) {
 
-        MainDataDto mainDataDto = mainService.getDefaulNoteMainDataDto(bookId, paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getDefaulNoteMainDataDto(bookId, urlParamManager.getKeyword(), urlParamManager.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
