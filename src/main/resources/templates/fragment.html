@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:fragment="params(keyword, isModalOpen, sortTarget)">
+  <input th:if="${keyword != null}" type="hidden" name="keyword" th:value="${keyword}">
+  <input type="hidden" name="isModalOpen" th:value="${isModalOpen}">
+  <input type="hidden" name="sortTarget" th:value="${sortTarget}">
+</th:block>
+</body>
+</html>

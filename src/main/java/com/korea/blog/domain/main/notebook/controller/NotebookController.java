@@ -5,7 +5,7 @@ import com.korea.blog.domain.main.MainService;
 import com.korea.blog.domain.main.note.entity.Note;
 import com.korea.blog.domain.main.notebook.entity.Notebook;
 import com.korea.blog.domain.main.notebook.service.NotebookService;
-import com.korea.blog.global.dto.ParamDto;
+import com.korea.blog.global.dto.UrlParamManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,54 +20,54 @@ public class NotebookController {
     private final MainService mainService; // 노트북 + 노트 혼합 작업 전문
 
     @PostMapping("/write")
-    public String writeBook() {
+    public String writeBook(UrlParamManager paramMgr) {
 //        Notebook notebook = notebookService.saveDefault();
 
         Notebook notebook = mainService.saveDefaultNotebook();
-        return "redirect:/books/%d".formatted(notebook.getId());
+        return paramMgr.getRedirectUrl("/books/%d".formatted(notebook.getId()));
     }
 
     @PostMapping("/{bookId}/write")
-    public String writeSubBook(@PathVariable long bookId) {
+    public String writeSubBook(@PathVariable long bookId, UrlParamManager paramMgr) {
 
         notebookService.checkSubNotebook(bookId);
 
         Notebook subNotebook = mainService.saveSubNotebook(bookId);
-        return "redirect:/books/%d/notes/%d".formatted(subNotebook.getId(), subNotebook.getNoteList().getFirst().getId());
+        return paramMgr.getRedirectUrl("/books/%d/notes/%d".formatted(subNotebook.getId(), subNotebook.getNoteList().getFirst().getId()));
     }
 
     @PostMapping("/{bookId}/modify")
-    public String modifyBook(@PathVariable long bookId, String name, long selectedNoteId) {
+    public String modifyBook(@PathVariable long bookId, String name, long selectedNoteId, UrlParamManager paramMgr) {
         notebookService.modify(bookId, name);
-        return "redirect:/books/%d/notes/%d".formatted(bookId, selectedNoteId);
+        return paramMgr.getRedirectUrl("/books/%d/notes/%d".formatted(bookId, selectedNoteId));
     }
 
     @PostMapping("/{bookId}/delete")
-    public String deleteBook(@PathVariable long bookId) {
+    public String deleteBook(@PathVariable long bookId, UrlParamManager paramMgr) {
 //        mainService.deleteNotebook(bookId);
         notebookService.delete(bookId);
-        return "redirect:/books/%d".formatted(notebookService.getList().getFirst().getId());
+        return paramMgr.getRedirectUrl("/books/%d".formatted(notebookService.getList().getFirst().getId()));
     }
 
     @PostMapping("/{bookId}/notes/write")
-    public String writeNote(@PathVariable long bookId) {
+    public String writeNote(@PathVariable long bookId, UrlParamManager paramMgr) {
         Note note = mainService.saveDefaultNote(bookId);
-        return "redirect:/books/%d/notes/%d".formatted(bookId, note.getId());
+        return paramMgr.getRedirectUrl("/books/%d/notes/%d".formatted(bookId, note.getId()));
     }
 
     @GetMapping("/{bookId}/notes/{noteId}")
-    public String selectNote(@PathVariable long bookId, ParamDto paramDto, @PathVariable long noteId, Model model) {
+    public String selectNote(@PathVariable long bookId, UrlParamManager urlParamManager, @PathVariable long noteId, Model model) {
 
-        MainDataDto mainDataDto = mainService.getMainDataDto(bookId, noteId, paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getMainDataDto(bookId, noteId, urlParamManager.getKeyword(), urlParamManager.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
     }
 
     @GetMapping("/{bookId}")
-    public String select(@PathVariable long bookId, ParamDto paramDto, Model model) {
+    public String select(@PathVariable long bookId, UrlParamManager urlParamManager, Model model) {
 
-        MainDataDto mainDataDto = mainService.getDefaulNoteMainDataDto(bookId, paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getDefaulNoteMainDataDto(bookId, urlParamManager.getKeyword(), urlParamManager.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
