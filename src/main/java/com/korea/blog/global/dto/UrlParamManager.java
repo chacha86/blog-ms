@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Setter
 @Getter
 @Component
@@ -21,7 +24,7 @@ public class UrlParamManager {
     }
 
     public String getQueryParam() {
-        return "keyword=" + keyword + "&isModalOpen=" + isModalOpen + "&sortTarget=" + sortTarget;
+        return "keyword=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8) + "&isModalOpen=" + isModalOpen + "&sortTarget=" + sortTarget;
     }
 
     public String getBookUrl(long bookId) {
@@ -36,5 +39,9 @@ public class UrlParamManager {
 
     public String getParamUrl(String url) {
         return url + "?" + getQueryParam();
+    }
+
+    public String getRedirectUrl(String url) {
+        return "redirect:" + getParamUrl(url);
     }
 }
