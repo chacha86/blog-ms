@@ -1,11 +1,20 @@
 package com.korea.blog.domain.main;
 
-import com.korea.blog.global.dto.ParamDto;
+import com.korea.blog.domain.main.note.dto.NoteDto;
+import com.korea.blog.domain.main.note.entity.Note;
+import com.korea.blog.domain.main.notebook.dto.NotebookDto;
+import com.korea.blog.domain.main.notebook.entity.Notebook;
+import com.korea.blog.global.dto.UrlBuilder;
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,14 +29,32 @@ public class MainController {
 
     // 초기 화면 -> 첫번째 노트북의 첫번째 노트가 선택되도록 약속
     @GetMapping("/")
-    public String main(Model model, ParamDto paramDto) {
+    public String main(Model model, UrlBuilder urlBuilder) {
 
-        MainDataDto mainDataDto = mainService.getDefaultMainDataDto(paramDto.getKeyword(), paramDto.getSortTarget());
+        MainDataDto mainDataDto = mainService.getDefaultMainDataDto(urlBuilder.getKeyword(), urlBuilder.getSortTarget());
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
     }
 
+    @AllArgsConstructor
+    @Getter
+    public static class SearchDataDto {
+        private List<NotebookDto> notebookDtos;
+        private List<NoteDto> noteDtos;
+    }
+    @GetMapping("/search")
+    @ResponseBody
+    public SearchDataDto search(String keyword) {
+
+        List<Notebook> searchedNotebookList = mainService.getSearchedNotebookList(keyword);
+        List<Note> searchedNoteList = mainService.getSearchedNoteList(keyword);
+
+        List<NotebookDto> notebookDtos = searchedNotebookList.stream().map(Notebook::toDto).toList();
+        List<NoteDto> noteDtos = searchedNoteList.stream().map(Note::toDto).toList();
+
+        return new SearchDataDto(notebookDtos, noteDtos);
+    }
     // 메인 화면
 //    @GetMapping("/notes/{noteId}")
 //    public String main(@PathVariable long noteId, Model model) {
