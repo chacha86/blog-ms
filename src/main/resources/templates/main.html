@@ -145,25 +145,33 @@
             const keyword = document.querySelector("#inputKeyword");
 
             // 서버에게 검색 결과 요청하기
-            fetch('http://localhost:8088/api/search?keyword='+keyword)
+            fetch('http://localhost:8088/api/search?keyword='+keyword.value)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                searchResult.innerHTML = "hihi";
+                let html = "";
+                data.searchedNotebookList.forEach((book) => {
+                    html += "<li>" + book.name + "</li>";
+                });
+
+                data.searchedNoteList.forEach((note) => {
+                    html += "<li>" + note.title + "</li>";
+                });
+
+                searchResult.innerHTML = html;
             });
         }
 
     </script>
     <script>
 
-        const isModalOpen = document.querySelector("#isModalOpen");
-        const isModalOpenVal = isModalOpen.value;
+        // const isModalOpen = document.querySelector("#isModalOpen");
+        // const isModalOpenVal = isModalOpen.value;
 
-        console.log(isModalOpenVal);
+        // console.log(isModalOpenVal);
 
-        if(isModalOpenVal === "true") {
-            my_modal_2.showModal();
-        }
+        // if(isModalOpenVal === "true") {
+        //     my_modal_2.showModal();
+        // }
 
     </script>
     <script th:inline="javascript">
