@@ -1,11 +1,19 @@
 package com.korea.blog.domain.main;
 
+import com.korea.blog.domain.main.note.entity.Note;
+import com.korea.blog.domain.main.notebook.entity.Notebook;
 import com.korea.blog.global.dto.UrlParamManager;
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +34,23 @@ public class MainController {
         model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SearchDto {
+        List<Notebook> searchedNotebookList;
+        List<Note> searchedNoteList;
+    }
+
+    @GetMapping("/api/search")
+    @ResponseBody
+    public SearchDto search(String keyword) {
+        List<Notebook> searchedNotebookList = mainService.getSearchedNotebookList(keyword);
+        List<Note> searcheNoteList = mainService.getSearchedNoteList(keyword);
+
+        return new SearchDto(searchedNotebookList, searcheNoteList);
     }
 
     // 메인 화면
